@@ -24,3 +24,5 @@ target_link_libraries(app
 
 install(TARGETS app
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+
+add_subdirectory(base)
