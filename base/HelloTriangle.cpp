@@ -1,6 +1,8 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#include <algorithm>
+#include <cstring>
 #include <cstdlib>
 #include <iostream>
 #include <set>
@@ -8,6 +10,12 @@
 #include <vector>
 
 
+/**
+ * \func verifyExtensions
+ *
+ * Tests that all extensions required by GLFW are available,
+ * returning true if so, and false otherwise.
+ **/
 bool verifyExtensions()
 {
     uint32_t glfwExtensionCount = 0;
@@ -60,6 +68,44 @@ private:
     const uint32_t _height = 600;
 
     VkInstance instance;
+    const std::vector<const char*> validationLayers = {
+        "VK_LAYER_KHRONOS_validation"
+    };
+
+#ifndef NDEBUG
+    const bool enableValidationLayers = true;
+#else
+    const bool enableValidationLayers = false;
+#endif
+
+    /**
+    * \func checkValidationLayerSupport
+    *
+    * Checks that Vulkan has validation layers available.
+    **/
+    bool checkValidationLayerSupport()
+    {
+        uint32_t layerCount;
+        vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+
+        std::vector<VkLayerProperties> availableLayers(layerCount);
+        vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+
+        for (const char *layerName : validationLayers)
+        {
+            const auto &findIf = std::find_if(std::begin(availableLayers), std::end(availableLayers),
+                [layerName](decltype(availableLayers[0]) layerIter)
+                {
+                    return strcmp(layerName, layerIter.layerName) == 0;
+                });
+            if (findIf == std::end(availableLayers))
+            {
+                return false;
+            }
+        }
+
+        return true;;
+    }
 
     void initWindow()
     {
@@ -106,6 +152,13 @@ private:
         if (not verifyExtensions())
         {
             throw std::runtime_error("not all GLFW extensions are available");
+        }
+        if (enableValidationLayers)
+        {
+            if (not checkValidationLayerSupport())
+            {
+                throw std::runtime_error("required validation layers are not available");
+            }
         }
         createInstance();
     }
