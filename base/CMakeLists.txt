@@ -6,7 +6,7 @@ add_executable(hellotriangle
 
 target_link_libraries(hellotriangle
     glfw
-    vulkan)
+    Vulkan::Vulkan)
 
 install(TARGETS hellotriangle
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
