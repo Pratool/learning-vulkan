@@ -6,12 +6,13 @@
 #include <vulkan/vulkan_core.h>
 
 #include <algorithm>
-#include <stdexcept>
-#include <vector>
-#include <set>
-#include <iostream>
 #include <cstring>
+#include <iostream>
+#include <optional>
+#include <set>
+#include <stdexcept>
 #include <string>
+#include <vector>
 
 
 bool HelloTriangleApplication::checkValidationLayerSupport()
@@ -145,8 +146,31 @@ void HelloTriangleApplication::pickPhysicalDevice()
 
 bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
 {
-    // No requirements on a Vulkan device yet.
-    return true;
+    return findQueueFamilies(device).isComplete();
+}
+
+
+QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(VkPhysicalDevice device)
+{
+    QueueFamilyIndices indices;
+
+    uint32_t queueFamilyCount = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+    std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+    uint32_t qidx = 0;
+    for (const auto& queueFamily : queueFamilies)
+    {
+        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+        {
+            indices.graphicsFamily = qidx;
+        }
+        ++qidx;
+    }
+
+    return indices;
 }
 
 
