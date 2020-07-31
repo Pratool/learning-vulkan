@@ -110,6 +110,43 @@ void HelloTriangleApplication::initVulkan()
     }
     createInstance();
     setupDebugMessenger();
+    pickPhysicalDevice();
+}
+
+
+void HelloTriangleApplication::pickPhysicalDevice()
+{
+    uint32_t deviceCount = 0;
+    vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+
+    if (0 == deviceCount)
+    {
+        throw std::runtime_error("Failed to find a GPU with Vulkan support.");
+    }
+
+    std::vector<VkPhysicalDevice> devices(deviceCount);
+    vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+
+    for (const auto& device : devices)
+    {
+        if (isDeviceSuitable(device))
+        {
+            physicalDevice = device;
+            break;
+        }
+    }
+
+    if (VK_NULL_HANDLE == physicalDevice)
+    {
+        throw std::runtime_error("Failed to find a suitable GPU.");
+    }
+}
+
+
+bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
+{
+    // No requirements on a Vulkan device yet.
+    return true;
 }
 
 
