@@ -50,6 +50,8 @@ private:
     VkDebugUtilsMessengerEXT debugMessenger;
 
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+    VkDevice device;
+    VkQueue graphicsQueue;
 
     const std::vector<const char*> validationLayers = {
         "VK_LAYER_KHRONOS_validation"
@@ -90,6 +92,8 @@ private:
 
     void createInstance();
     void initVulkan();
+
+    void createLogicalDevice();
 
     void pickPhysicalDevice();
     bool isDeviceSuitable(VkPhysicalDevice device);
