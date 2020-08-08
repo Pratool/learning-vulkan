@@ -30,6 +30,14 @@ struct QueueFamilyIndices
 };
 
 
+struct SwapChainSupportDetails
+{
+    VkSurfaceCapabilitiesKHR capabilities;
+    std::vector<VkSurfaceFormatKHR> formats;
+    std::vector<VkPresentModeKHR> presentModes;
+};
+
+
 class HelloTriangleApplication
 {
 public:
@@ -55,6 +63,11 @@ private:
     VkDevice device;
     VkQueue graphicsQueue;
     VkQueue presentQueue;
+
+    VkSwapchainKHR swapChain;
+    std::vector<VkImage> swapChainImages;
+    VkFormat swapChainImageFormat;
+    VkExtent2D swapChainExtent;
 
     const std::vector<const char*> validationLayers = {
         "VK_LAYER_KHRONOS_validation" };
@@ -93,6 +106,11 @@ private:
 
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
 
+    SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+    VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+    VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+    VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+
     std::vector<const char *> getRequiredExtensions();
 
     void createInstance();
@@ -108,6 +126,7 @@ private:
     void setupDebugMessenger();
 
     void createSurface();
+    void createSwapChain();
 
     void mainLoop();
     void cleanup();
