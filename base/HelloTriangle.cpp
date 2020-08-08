@@ -199,7 +199,9 @@ void HelloTriangleApplication::pickPhysicalDevice()
 
 bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
 {
-    return findQueueFamilies(device).isComplete();
+    const auto indices = findQueueFamilies(device);
+    const auto extensionsSupported = checkDeviceExtensionSupport(device);
+    return indices.isComplete() and extensionsSupported;
 }
 
 
@@ -232,6 +234,24 @@ QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(VkPhysicalDevice 
     }
 
     return indices;
+}
+
+
+bool HelloTriangleApplication::checkDeviceExtensionSupport(VkPhysicalDevice device)
+{
+    uint32_t extensionCount;
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+    std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+    std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+    for (const auto &extension : availableExtensions)
+    {
+        requiredExtensions.erase(extension.extensionName);
+    }
+
+    return requiredExtensions.empty();
 }
 
 

@@ -23,7 +23,7 @@ struct QueueFamilyIndices
     std::optional<uint32_t> graphicsFamily;
     std::optional<uint32_t> presentFamily;
 
-    bool isComplete()
+    bool isComplete() const
     {
         return graphicsFamily.has_value() && presentFamily.has_value();
     }
@@ -57,8 +57,10 @@ private:
     VkQueue presentQueue;
 
     const std::vector<const char*> validationLayers = {
-        "VK_LAYER_KHRONOS_validation"
-    };
+        "VK_LAYER_KHRONOS_validation" };
+
+    const std::vector<const char*> deviceExtensions = {
+        VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
     void initWindow()
     {
@@ -101,6 +103,7 @@ private:
     void pickPhysicalDevice();
     bool isDeviceSuitable(VkPhysicalDevice device);
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+    bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 
     void setupDebugMessenger();
 
