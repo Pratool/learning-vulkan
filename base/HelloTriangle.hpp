@@ -68,6 +68,7 @@ private:
     std::vector<VkImage> swapChainImages;
     VkFormat swapChainImageFormat;
     VkExtent2D swapChainExtent;
+    std::vector<VkImageView> swapChainImageViews;
 
     const std::vector<const char*> validationLayers = {
         "VK_LAYER_KHRONOS_validation" };
@@ -127,6 +128,7 @@ private:
 
     void createSurface();
     void createSwapChain();
+    void createImageViews();
 
     void mainLoop();
     void cleanup();
