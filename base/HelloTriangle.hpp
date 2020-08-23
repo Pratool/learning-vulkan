@@ -41,6 +41,17 @@ struct SwapChainSupportDetails
 class HelloTriangleApplication
 {
 public:
+    explicit HelloTriangleApplication() = default;
+    HelloTriangleApplication(const std::string &_appLocation) :
+        appLocation{_appLocation}
+    {
+    }
+    HelloTriangleApplication(const HelloTriangleApplication &rhs) = default;
+    HelloTriangleApplication(HelloTriangleApplication &&rhs) = default;
+    HelloTriangleApplication & operator=(const HelloTriangleApplication &rhs) = default;
+    HelloTriangleApplication & operator=(HelloTriangleApplication &&rhs) = default;
+    ~HelloTriangleApplication() = default;
+
     void run()
     {
         initWindow();
@@ -50,6 +61,8 @@ public:
     }
 
 private:
+    std::string appLocation;
+
     GLFWwindow *window;
     // Window size in pixels.
     const uint32_t _width = 800;
@@ -129,6 +142,7 @@ private:
     void createSurface();
     void createSwapChain();
     void createImageViews();
+    void createGraphicsPipeline();
 
     void mainLoop();
     void cleanup();

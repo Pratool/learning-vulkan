@@ -4,6 +4,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan_core.h>
+#include <boost/filesystem.hpp>
 
 #include <algorithm>
 #include <cstring>
@@ -197,6 +198,7 @@ void HelloTriangleApplication::initVulkan()
     createLogicalDevice();
     createSwapChain();
     createImageViews();
+    createGraphicsPipeline();
 }
 
 
@@ -472,6 +474,14 @@ void HelloTriangleApplication::createImageViews()
             throw std::runtime_error("Failed to create image views.");
         }
     }
+}
+
+
+void HelloTriangleApplication::createGraphicsPipeline()
+{
+    auto shadersDir = boost::filesystem::path{appLocation}.parent_path() / "../shaders/";
+    auto vertShaderCode = readFile((shadersDir / "vert.spv").generic_string());
+    auto fragShaderCode = readFile((shadersDir / "frag.spv").generic_string());
 }
 
 

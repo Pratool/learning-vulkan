@@ -23,6 +23,9 @@ target_link_libraries(app
     vulkan)
 
 install(TARGETS app
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    RUNTIME DESTINATION bin)
+
+install(DIRECTORY shaders
+        DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 add_subdirectory(base)

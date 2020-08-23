@@ -1,8 +1,8 @@
 #include "HelloTriangle.hpp"
 
 
-int main() {
-    HelloTriangleApplication app;
+int main(int argc, char **argv) {
+    HelloTriangleApplication app{argv[0]};
 
     try
     {

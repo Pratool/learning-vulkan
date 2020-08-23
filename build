@@ -1,10 +1,40 @@
 #!/bin/bash
 
+function build_shaders()
+{(
+    set -eu -o pipefail
+    search_dir="${1:-}"
+    if [[ -z "${search_dir}" ]]; then
+        >&2 echo "provide search dir as first arg to build_shaders"
+        exit 1
+    fi
+    if [[ ! -d "${search_dir}" ]]; then
+        >&2 echo "provide valid dir as first arg to build_shaders"
+        exit 1
+    fi
+
+    mkdir -p ${search_dir}/shaders/
+
+    shift
+
+    SC=${1:-}
+    if [[ -z "${SC}" ]]; then
+        SC=glslc
+    fi
+
+    while read shader_source ; do
+        >&2 echo ${SC} ${shader_source} -o ${search_dir}/shaders/${shader_source##*.}.spv
+        ${SC} ${shader_source} -o ${search_dir}/shaders/${shader_source##*.}.spv
+    done < <( find ${search_dir} -type f -name 'shader*' )
+)}
+
 (
 SOURCE_DIR="$(readlink -f $(dirname $0))"
 BUILD_DIR="$(dirname ${SOURCE_DIR})/app-build"
 INSTALL_DIR="$(dirname ${SOURCE_DIR})/app-install"
 mkdir -p $BUILD_DIR $INSTALL_DIR
+build_shaders $(dirname $0)
+
 cd $BUILD_DIR
 
 cmake -G Ninja \

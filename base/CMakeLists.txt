@@ -1,3 +1,4 @@
+find_package(Boost REQUIRED COMPONENTS filesystem)
 find_package(glfw3 REQUIRED)
 find_package(Vulkan REQUIRED)
 
@@ -6,13 +7,10 @@ add_executable(hellotriangle
     HelloTriangle.cpp
     main.cpp)
 
-target_include_directories(hellotriangle
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR})
-
 target_link_libraries(hellotriangle
+    Boost::filesystem
     glfw
     Vulkan::Vulkan)
 
 install(TARGETS hellotriangle
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    RUNTIME DESTINATION bin)
