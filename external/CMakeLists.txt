@@ -26,3 +26,15 @@ externalproject_add(GLFWExternalProject
         -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
         -DCMAKE_PREFIX_PATH:PATH=${CMAKE_INSTALL_PREFIX}
         -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX})
+
+externalproject_add(GLMExternalProject
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/glm
+    URL "https://github.com/g-truc/glm/archive/0.9.9.8.tar.gz"
+    URL_HASH SHA256=7d508ab72cb5d43227a3711420f06ff99b0a0cb63ee2f93631b162bfe1fe9592
+    DOWNLOAD_NO_PROGRESS ON
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND pwd && cp -R cmake/glm ${CMAKE_INSTALL_PREFIX}/cmake/
+    COMMAND cp -R glm ${CMAKE_INSTALL_PREFIX}/include/
+    COMMAND rm ${CMAKE_INSTALL_PREFIX}/include/glm/CMakeLists.txt)
