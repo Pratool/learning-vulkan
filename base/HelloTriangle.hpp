@@ -64,9 +64,9 @@ private:
     std::string appLocation;
 
     GLFWwindow *window;
-    // Window size in pixels.
-    const uint32_t _width = 800;
-    const uint32_t _height = 600;
+    /// Window size in pixels.
+    static constexpr uint32_t width_px_ = 800;
+    static constexpr uint32_t height_px_ = 600;
 
     VkInstance instance;
     VkDebugUtilsMessengerEXT debugMessenger;
@@ -98,7 +98,7 @@ private:
         // Disable window resizing.
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-        window = glfwCreateWindow(_width, _height, "Vulkan", nullptr, nullptr);
+        window = glfwCreateWindow(width_px_, height_px_, "Vulkan", nullptr, nullptr);
     }
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -111,11 +111,7 @@ private:
         return VK_FALSE;
     }
 
-    /**
-    * \func checkValidationLayerSupport
-    *
-    * Checks that Vulkan has validation layers available.
-    **/
+    /// Checks that Vulkan has validation layers available.
     bool checkValidationLayerSupport();
 
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);

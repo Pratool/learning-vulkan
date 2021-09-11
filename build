@@ -41,6 +41,7 @@ cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
     -DCMAKE_PREFIX_PATH="$(dirname ${SOURCE_DIR})/install" \
+    -DCMAKE_INSTALL_RPATH="$(readlink -f ${SOURCE_DIR}/../install/lib)" \
     "${SOURCE_DIR}"
 ninja -j $(nproc) install
 )
