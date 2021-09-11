@@ -20,4 +20,5 @@ install(DIRECTORY shaders
 
 add_subdirectory(base)
 add_subdirectory(base_code)
+add_subdirectory(instance)
 add_subdirectory(utilities)
