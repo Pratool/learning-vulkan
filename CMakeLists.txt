@@ -19,4 +19,5 @@ install(DIRECTORY shaders
         DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 add_subdirectory(base)
+add_subdirectory(base_code)
 add_subdirectory(utilities)
