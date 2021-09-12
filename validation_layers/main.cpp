@@ -1,5 +1,7 @@
 #include "HelloTriangle.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
@@ -14,7 +16,7 @@ int main()
   }
   catch (const std::exception& e)
   {
-    std::cerr << e.what() << std::endl;
+    spdlog::error(e.what());
     return EXIT_FAILURE;
   }
 

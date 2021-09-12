@@ -1,6 +1,8 @@
 #include "HelloTriangle.hpp"
 #include "VulkanUtilities.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <algorithm>
 #include <cstring>
 #include <stdexcept>
@@ -145,7 +147,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL HelloTriangleApplication::debugCallback(
   const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
   void* pUserData)
 {
-  std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+  spdlog::info("validation layer: {:s}", pCallbackData->pMessage);
   return VK_FALSE;
 }
 
