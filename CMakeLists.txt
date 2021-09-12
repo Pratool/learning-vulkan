@@ -21,5 +21,6 @@ install(DIRECTORY shaders
 add_subdirectory(base)
 add_subdirectory(base_code)
 add_subdirectory(instance)
+add_subdirectory(physical_devices_and_queue_families)
 add_subdirectory(utilities)
 add_subdirectory(validation_layers)
