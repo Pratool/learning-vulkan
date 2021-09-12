@@ -29,6 +29,7 @@ function build_shaders()
 )}
 
 (
+build_type=${1:-Release}
 SOURCE_DIR="$(readlink -f $(dirname $0))"
 BUILD_DIR="$(dirname ${SOURCE_DIR})/app-build"
 INSTALL_DIR="$(dirname ${SOURCE_DIR})/app-install"
@@ -38,7 +39,7 @@ build_shaders $(dirname $0)
 cd $BUILD_DIR
 
 cmake -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=${build_type} \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
     -DCMAKE_PREFIX_PATH="$(dirname ${SOURCE_DIR})/install" \
     -DCMAKE_INSTALL_RPATH="$(readlink -f ${SOURCE_DIR}/../install/lib)" \
