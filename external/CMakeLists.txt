@@ -38,3 +38,13 @@ externalproject_add(GLMExternalProject
     INSTALL_COMMAND pwd && cp -R cmake/glm ${CMAKE_INSTALL_PREFIX}/cmake/
     COMMAND cp -R glm ${CMAKE_INSTALL_PREFIX}/include/
     COMMAND rm ${CMAKE_INSTALL_PREFIX}/include/glm/CMakeLists.txt)
+
+externalproject_add(SpdlogExternalProject
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/spdlog
+    URL "https://github.com/gabime/spdlog/archive/refs/tags/v1.9.2.tar.gz"
+    URL_HASH SHA256=6fff9215f5cb81760be4cc16d033526d1080427d236e86d70bb02994f85e3d38
+    DOWNLOAD_NO_PROGRESS ON
+    CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+        -DCMAKE_PREFIX_PATH:PATH=${CMAKE_INSTALL_PREFIX}
+        -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX})
