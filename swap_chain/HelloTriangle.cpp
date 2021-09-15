@@ -154,11 +154,28 @@ std::vector<const char*> HelloTriangleApplication::getRequiredExtensions()
 
 VKAPI_ATTR VkBool32 VKAPI_CALL HelloTriangleApplication::debugCallback(
   VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-  VkDebugUtilsMessageTypeFlagsEXT messageType,
+  VkDebugUtilsMessageTypeFlagsEXT /*messageType*/,
   const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-  void* pUserData)
+  void* /*pUserData*/)
 {
-  spdlog::info("validation layer: {:s}", pCallbackData->pMessage);
+  const auto msg = fmt::format("validation layer: {:s}", pCallbackData->pMessage);
+  switch (messageSeverity)
+  {
+    case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
+      spdlog::debug(msg);
+      break;
+    case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
+      spdlog::info(msg);
+      break;
+    case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
+      spdlog::warn(msg);
+      break;
+    case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
+      spdlog::critical(msg);
+      break;
+    default:
+      break;
+  }
   return VK_FALSE;
 }
 
