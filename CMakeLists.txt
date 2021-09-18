@@ -5,6 +5,10 @@ cmake_minimum_required(VERSION 3.10)
 
 project(LearningVulkan)
 
+add_subdirectory(tools)
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/AddShader.cmake)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()

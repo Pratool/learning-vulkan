@@ -1,0 +1,1 @@
+add_executable(shader_processor ShaderHeaderProcessor.cpp)
