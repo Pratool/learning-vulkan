@@ -1,5 +1,7 @@
 #include "Helpers.hpp"
 #include "HelloTriangle.hpp"
+#include "hellotriangle_frag/hellotriangle_frag.hpp"
+#include "hellotriangle_vert/hellotriangle_vert.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -479,9 +481,7 @@ void HelloTriangleApplication::createImageViews()
 
 void HelloTriangleApplication::createGraphicsPipeline()
 {
-    auto shadersDir = boost::filesystem::path{appLocation}.parent_path() / "../shaders/";
-    auto vertShaderCode = readFile((shadersDir / "vert.spv").generic_string());
-    auto fragShaderCode = readFile((shadersDir / "frag.spv").generic_string());
+  // Shader is compiled and linked as a std::array.
 }
 
 
