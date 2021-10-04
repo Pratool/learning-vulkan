@@ -19,9 +19,6 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(glfw3 REQUIRED)
 find_package(Vulkan REQUIRED)
 
-install(DIRECTORY shaders
-        DESTINATION ${CMAKE_INSTALL_PREFIX})
-
 add_subdirectory(base)
 add_subdirectory(00-base_code)
 add_subdirectory(01-instance)
