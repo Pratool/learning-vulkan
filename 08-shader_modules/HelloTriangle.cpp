@@ -509,8 +509,8 @@ void HelloTriangleApplication::createImageViews()
 
 void HelloTriangleApplication::createGraphicsPipeline()
 {
-  VkShaderModule vertShaderModule = createShaderModule(shader_modules_vertex_shader);
-  VkShaderModule fragShaderModule = createShaderModule(shader_modules_fragment_shader);
+  VkShaderModule vertShaderModule = createShaderModule(shader_modules_vertex_shader());
+  VkShaderModule fragShaderModule = createShaderModule(shader_modules_fragment_shader());
 
   VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
   vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;

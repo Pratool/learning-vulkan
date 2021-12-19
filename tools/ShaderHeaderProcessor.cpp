@@ -33,17 +33,24 @@ void processFile(const std::string& inputFilename, const std::string& sourceFile
     throw std::runtime_error("Failed to open file");
   }
 
+  const std::string arrayType = [&buffer]() {
+    std::stringstream ss;
+    ss << "std::array<uint32_t, " << buffer.size() << "> ";
+    return ss.str();
+  }();
+
   header << "#include <array>" << std::endl
-         << "static std::array<uint32_t, " << buffer.size() << "> " << variableName << ';' << std::endl;
+         << arrayType  << variableName << "();" << std::endl;
   header.close();
 
   output << "#include <array>" << std::endl
-         << "static std::array<uint32_t, " << buffer.size() << "> " << variableName << " = {" << std::endl;
+         << arrayType << variableName << "() { " << std::endl
+         << arrayType << "shader = {" << std::endl;
 
   int n = 0;
   for (const auto& value : buffer)
   {
-    output << "0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<uint32_t>(htonl(value)) << ',';
+    output << "0x" << std::hex << std::setfill('0') << std::setw(8) << static_cast<uint32_t>(value) << ',';
     if ((++n % 8) == 0)
     {
       output << std::endl;
@@ -53,7 +60,8 @@ void processFile(const std::string& inputFilename, const std::string& sourceFile
       output << ' ';
     }
   }
-  output << "};" << std::endl;
+  output << "};" << std::endl
+         << "return shader;" << std::endl << "}";
   output.close();
 }
 
