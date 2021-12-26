@@ -488,7 +488,7 @@ void HelloTriangleApplication::createSwapChain()
 void HelloTriangleApplication::createImageViews()
 {
   swapChainImageViews_.resize(swapChainImages_.size());
-  for (std::size_t idx; idx < swapChainImages_.size(); ++idx)
+  for (std::size_t idx = 0; idx < swapChainImages_.size(); ++idx)
   {
     VkImageViewCreateInfo createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
